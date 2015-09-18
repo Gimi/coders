@@ -9,8 +9,8 @@ defmodule Coders do
     children = [
       # Start the endpoint when the application starts
       supervisor(Coders.Endpoint, []),
-      # Start the Ecto repository
-      worker(Coders.Repo, []),
+      # Start the Rethinkdb repository
+      worker(Coders.Repo, [Application.get_env(:coders, Coders.Repo)]),
       # Here you could define other workers and supervisors as children
       # worker(Coders.Worker, [arg1, arg2, arg3]),
     ]

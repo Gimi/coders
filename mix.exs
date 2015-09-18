@@ -17,8 +17,7 @@ defmodule Coders.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [mod: {Coders, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+     applications: [:phoenix, :phoenix_html, :cowboy, :logger]]
   end
 
   # Specifies which paths to compile per environment
@@ -29,9 +28,10 @@ defmodule Coders.Mixfile do
   #
   # Type `mix help deps` for examples and options
   defp deps do
-    [{:phoenix, "~> 1.0.2"},
-     {:phoenix_ecto, "~> 1.1"},
-     {:postgrex, ">= 0.0.0"},
+    [{:phoenix,      "~> 1.0.2"},
+     {:ecto,         "~> 1.0.3"},
+     {:rethinkdb,    "~> 0.1.0"},
+     {:httpoison,    "~> 0.7.3"},
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"}]

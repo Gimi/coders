@@ -19,8 +19,9 @@ defmodule Coders.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", Coders do
-  #   pipe_through :api
-  # end
+  scope "/api", Coders.API, as: :api do
+    pipe_through :api
+
+    post "/coders", CoderController, :create
+  end
 end

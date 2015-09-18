@@ -18,18 +18,13 @@ defmodule Coders.Web do
 
   def model do
     quote do
-      use Ecto.Model
-      
+      use RethinkDB.Model
     end
   end
 
   def controller do
     quote do
       use Phoenix.Controller
-
-      alias Coders.Repo
-      import Ecto.Model
-      import Ecto.Query, only: [from: 1, from: 2]
 
       import Coders.Router.Helpers
     end
@@ -58,11 +53,6 @@ defmodule Coders.Web do
   def channel do
     quote do
       use Phoenix.Channel
-
-      alias Coders.Repo
-      import Ecto.Model
-      import Ecto.Query, only: [from: 1, from: 2]
-
     end
   end
 

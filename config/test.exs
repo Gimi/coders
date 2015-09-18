@@ -14,9 +14,7 @@ config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
 config :coders, Coders.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
   database: "coders_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+  host: System.get_env("RETHINKDB_PORT_32768_TCP_ADDR"),
+  port: System.get_env("RETHINKDB_PORT_32768_TCP_PORT"),
+  name: Coders.Repo

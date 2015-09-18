@@ -34,9 +34,8 @@ config :phoenix, :stacktrace_depth, 20
 
 # Configure your database
 config :coders, Coders.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "coders_dev",
-  hostname: "localhost",
-  pool_size: 10
+  database: "coders",
+  #host: System.get_env("RETHINKDB_PORT_32768_TCP_ADDR"),
+  #port: System.get_env("RETHINKDB_PORT_32768_TCP_PORT"),
+  host: "localhost",
+  port: 32769

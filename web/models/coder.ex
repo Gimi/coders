@@ -9,8 +9,14 @@ defmodule Coders.Coder do
 
   use Coders.Web, :model
 
-  @primary_key :github
+  @primary_key {:github, :string, autogenerate: false}
 
-  defstruct github: nil, name: nil, avatar_url: nil
-  @type t :: %__MODULE__{github: String.t, name: String.t, avatar_url: String.t}
+  schema "coders" do
+    field :name,       :string
+    field :avatar_url, :string
+  end
+
+
+  @required_fields ~w(:github, :name)
+  @optional_fields ~w(:avatar_url)
 end

@@ -45,13 +45,18 @@ defmodule Coders.Repo do
 
   @doc false
   # Return the table name of a model.
-  defp table_name(%{__struct__: mod}) when is_atom(mod), do: table_name(mod)  # model is a struct instance
-  defp table_name(model) when is_atom(model),            do: model.table_name # model is a struct module
+  defp table_name(%{__struct__: mod}) when is_atom(mod), do: table_name(mod)           # model is a struct instance
+  defp table_name(model) when is_atom(model),            do: model.__schema__(:source) # model is a struct module
 
   @doc false
   # Return the primary key of a model.
-  defp pk(%{__struct__: mod}) when is_atom(mod), do: pk(mod)           # model is a struct instance
-  defp pk(model) when is_atom(model),            do: model.primary_key # model is a struct module
+  defp pk(%{__struct__: mod}) when is_atom(mod), do: pk(mod) # model is a struct instance
+  defp pk(model) when is_atom(model) do                      # model is a struct module
+    case model.__schema__(:primary_key) do
+      [key] -> key
+      keys  -> keys
+    end
+  end
 
   @doc false
   # Return the table query of a model.

@@ -16,7 +16,7 @@ defmodule Coders.ErrorView do
   end
 
   def render("500.json", %{reason: reason}) do
-    Poison.encode!(%{status: :error, error: inspect(reason)})
+    error_object inspect(reason)
   end
 
   # a convenience function to generate JSON error object.

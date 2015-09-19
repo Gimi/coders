@@ -13,8 +13,9 @@ defmodule Coders.GithubUser do
     field :name,       :string
     field :avatar_url, :string
     field :status,     :string
-    field :created_at, Ecto.DateTime
-    field :updated_at, Ecto.DateTime
+    field :created_at, :string # Ecto.DateTime - `rethinkdb` can't handle this
+    field :updated_at, :string # Ecto.DateTime
+    field :watched_at, :string # Ecto.DateTime
   end
 
 
@@ -34,13 +35,6 @@ defmodule Coders.GithubUser do
     struct __MODULE__, Map.merge(%{status: @status[:new]}, attrs)
   end
 
-  @doc """
-  Retrieve data for the user from Github.
-  """
-  def pop_fields(%{github: github} = model) do
-    Map.merge(model, %{github: github})
-  end
-
   @doc"""
   Transfer a user from current status to a new status.
   """
@@ -51,5 +45,24 @@ defmodule Coders.GithubUser do
   def changeset(model, params) do
     super(model, params)
     |> validate_format(:avatar_url, ~r(^https?://))
+    |> validate_change(:created_at, &validate_time(&1, &2))
+    |> validate_change(:updated_at, &validate_time(&1, &2))
+    |> add_watched_at
+  end
+
+  # TODO use `RethinkDB.Pseudotypes.Time`
+  defp validate_time(k, v) do
+    case Ecto.DateTime.cast(v) do
+      {:ok, _} -> []
+      :error   -> [k, "is not a time"]
+    end
+  end
+
+  defp add_watched_at(%Ecto.Changeset{model: model, changes: changes} = changeset) do
+    if is_nil(model.watched_at) and is_nil(changes[:watched_at]) do
+      %{changeset | changes: Map.put(changes, :watched_at, Ecto.DateTime.to_string(Ecto.DateTime.utc))}
+    else
+      changeset
+    end
   end
 end

@@ -18,11 +18,20 @@ defmodule Coders.API.GithubUserController do
   end
 
   def create(conn, params) do
-    login = User.changeset(params) |> Repo.insert!
-    user  = Repo.get!(User, login)
+    user = User.changeset(params)
+    profile = if user.valid?, do: Github.user(user.changes[:login])
 
-    #Coders.GithubUserWatcher.notify(:user_added, res)
-    json conn, %{status: :ok, data: user}
+    case profile do
+      nil -> conn
+             |> put_status(400)
+             |> json(%{status: :error, message: "Could not find github user with #{user.changes[:login]}."})
+      _   ->
+        user = User.changeset(user, profile)
+        Repo.insert! user
+
+        #Coders.GithubUserWatcher.notify(:user_added, res)
+        json conn, %{status: :ok, data: user.changes}
+    end
   end
 
   def delete(conn, %{"id" => id}) do

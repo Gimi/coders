@@ -22,6 +22,6 @@ defmodule Coders.Router do
   scope "/api", Coders.API, as: :api do
     pipe_through :api
 
-    post "/coders", CoderController, :create
+    resources "github_users", GithubUserController, only: [:index, :show, :create, :delete]
   end
 end

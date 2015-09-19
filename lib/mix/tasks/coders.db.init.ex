@@ -32,7 +32,7 @@ defmodule Mix.Tasks.Coders.Db.Init do
     show_result(create_db)
 
     info "Going to create tables ..."
-    show_result(create_table(Coders.Coder))
+    show_result(create_table(Coders.GithubUser))
 
     :ok
   end

@@ -27,6 +27,8 @@ defmodule Coders.Web do
       use Phoenix.Controller
 
       import Coders.Router.Helpers
+
+      alias Coders.Repo
     end
   end
 

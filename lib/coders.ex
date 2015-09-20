@@ -11,6 +11,10 @@ defmodule Coders do
       supervisor(Coders.Endpoint, []),
       # Start the Rethinkdb repository
       worker(Coders.Repo, [Application.get_env(:coders, Coders.Repo)]),
+      # Start the application event dispatcher
+      supervisor(Coders.EventDispatcher, []),
+      # Start the task server
+      supervisor(Task.Supervisor, [[name: Coders.TaskServer]])
       # Here you could define other workers and supervisors as children
       # worker(Coders.Worker, [arg1, arg2, arg3]),
     ]

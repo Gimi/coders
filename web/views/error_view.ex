@@ -19,11 +19,6 @@ defmodule Coders.ErrorView do
     error_object inspect(reason)
   end
 
-  # a convenience function to generate JSON error object.
-  defp error_object(msg, extra \\ %{}) do
-    Map.merge(%{status: :error, message: msg}, extra)
-  end
-
   def render("404.html", _assigns) do
     "Page not found"
   end
@@ -36,5 +31,10 @@ defmodule Coders.ErrorView do
   # template is found, let's render it as 500
   def template_not_found(_template, assigns) do
     render "500.html", assigns
+  end
+
+  # a convenience function to generate JSON error object.
+  defp error_object(msg, extra \\ %{}) do
+    Map.merge(%{status: :error, message: msg}, extra)
   end
 end

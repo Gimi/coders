@@ -25,6 +25,26 @@ defmodule Github.HTTP do
     end
   end
 
+  # we just want the body!
+  def get_or!(url, default \\ nil) do
+    case get_or(url, default) do
+      %HTTPoison.Response{body: body} -> Poison.decode!(body)
+      resp                            -> resp
+    end
+  end
+
+  @doc """
+  Get a collection reponse as a stream. If nothing returned,
+  return an empty list.
+  """
+  @spec get_stream(String.t) :: Enumerable.t
+  def get_stream(url) do
+    case resp = get_or(url, []) do
+      %HTTPoison.Response{} -> pagination_stream(resp)
+      _                     -> resp
+    end
+  end
+
   @doc "Make a paginated resource, e.g. event, as a stream."
   @spec pagination_stream(HTTPoison.Response.t) :: Stream.t
   def pagination_stream(%HTTPoison.Response{body: body} = resp) do

@@ -2,6 +2,7 @@ defmodule Coders.API.GithubUserController do
   use Coders.Web, :controller
 
   alias Coders.GithubUser, as: User
+  alias Coders.EventDispatcher
 
   plug :set_json_content_type # move this to a utils module when we have more API modules
 
@@ -29,7 +30,7 @@ defmodule Coders.API.GithubUserController do
         user = User.changeset(user, profile)
         Repo.insert! user
 
-        #Coders.GithubUserWatcher.notify(:user_added, res)
+        EventDispatcher.fire(:github_user_added, user.changes)
         json conn, %{status: :ok, data: user.changes}
     end
   end
@@ -37,7 +38,9 @@ defmodule Coders.API.GithubUserController do
   def delete(conn, %{"id" => id}) do
     case Repo.delete!(User, id) do
       0 -> send_resp conn, 404, ""
-      n -> json conn, %{status: :ok, count: n}
+      n ->
+        EventDispatcher.fire(:github_user_deleted, %{id: id})
+        json conn, %{status: :ok, count: n}
     end
   end
 

@@ -48,6 +48,13 @@ defmodule Coders.Repo do
   end
 
   @doc """
+  Update a record of the model.
+  """
+  def update(model, id, updates) when is_atom(model) and is_map(updates) do
+    table_of(model) |> Q.get(id) |> Q.update(updates) |> run
+  end
+
+  @doc """
   Delete a record of the model by ID (primary key).
   """
   def delete(model, id) when is_atom(model) and is_list(id) do

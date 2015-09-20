@@ -19,6 +19,16 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Configures the event dispatcher. Mainly registers handlers
+# which are interested in the application's events.
+# Elements in `:handers` can be in two forms:
+# * Just the module name
+# * A list of `[module, arg1, arg2, ..., argN]`
+config :coders, Coders.EventDispatcher,
+  handlers: [
+    Coders.Handler.Github
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Dig out fun facts about coders from their open source projects.">
+    <meta name="author" content="Gimi Liang <liang.gimi@gmail.com>">
+
+    <title>Coder Fun Facts!</title>
+    <link rel="stylesheet" href="/css/vendor.css">
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style type="text/css">
+.avatar-frame{border: 2px solid #c7b89e;}
+.avatar-frame,.avatar-frame img{
+  width: 50px;
+  height: 50px;
+  -webkit-border-radius: 30px; /* Saf3+, Chrome */
+  border-radius: 30px; /* Opera 10.5, IE 9 */
+  /*-moz-border-radius: 30px;  Disabled for FF1+ */
+}
+    </style>
+  </head>
+
+  <body>
+    <div id="app-dom" class="container" role="main" />
+    <script type="text/javascript">
+      /* to workaround a material-ui bug */
+      window.process = {env:{NODE_ENV:'production'}};
+    </script>
+    <script src="/js/vendor.js"></script>
+    <script src="/js/app.js"></script>
+  </body>
+</html>

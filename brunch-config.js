@@ -2,14 +2,26 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
+      // Join to one file.
+      // joinTo: "js/app.js"
 
       // To use a separate vendor.js bundle, specify two files path
       // https://github.com/brunch/brunch/blob/stable/docs/config.md#files
-      // joinTo: {
-      //  "js/app.js": /^(web\/static\/js)/,
-      //  "js/vendor.js": /^(web\/static\/vendor)|(deps)/
-      // }
+      joinTo: {
+       "js/app.js": /^(web\/static\/js)/,
+       "js/vendor.js": /^(web\/static\/vendor)|(deps)/
+      },
+
+      order: {
+        before: [
+          'web/static/js/react.js',
+          'web/static/js/react/addons.js',
+          'web/static/js/react/dom.js'
+        ],
+        after: [
+          'web/static/js/app.js'
+        ]
+      }
       //
       // To change the order of concatenation of files, explicitly mention here
       // https://github.com/brunch/brunch/tree/master/docs#concatenation
@@ -21,7 +33,11 @@ exports.config = {
       // }
     },
     stylesheets: {
-      joinTo: "css/app.css"
+      //joinTo: "css/app.css"
+      joinTo: {
+       "css/app.css": /^(web\/static\/css)/,
+       "css/vendor.css": /^(web\/static\/vendor)|(deps)/
+      }
     },
     templates: {
       joinTo: "js/app.js"
@@ -59,7 +75,10 @@ exports.config = {
 
   modules: {
     autoRequire: {
-      "js/app.js": ["web/static/js/app"]
+      "js/app.js": ["app"]
+    },
+    nameCleaner: function(path) {
+      return path.replace(/^web\/static\/js\//, '');
     }
   },
 

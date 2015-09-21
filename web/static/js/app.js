@@ -26,21 +26,20 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 // components, as we will not be modifying these
 
 const React = require('react/addons');
-const ReactDom = require('react/dom');
 
-const muiCard = require('material-ui/card/index');
+const muiCard = require('material-ui/lib/card/index');
 const Card = muiCard.Card;
 const CardHeader = muiCard.CardHeader;
 const CardText = muiCard.CardText;
 const CardActions = muiCard.CardActions;
-const FlatButton = require('material-ui/flat-button');
-const Avatar = require('material-ui/avatar');
+const FlatButton = require('material-ui/lib/flat-button');
+const Avatar = require('material-ui/lib/avatar');
 
-const AppBar = require('material-ui/app-bar');
+const AppBar = require('material-ui/lib/app-bar');
 
-const FloatingActionButton = require('material-ui/floating-action-button');
+const FloatingActionButton = require('material-ui/lib/floating-action-button');
 
-const ThemeManager = require('material-ui/styles/theme-manager')();
+const ThemeManager = require('material-ui/lib/styles/theme-manager')();
 
 const CoderCard = React.createClass({
   childContextTypes: {
@@ -103,4 +102,4 @@ const CodersApp = React.createClass({
 
 });
 
-ReactDom.render(<CodersApp />, document.getElementById('app-dom'));
+React.render(<CodersApp />, document.getElementById('app-dom'));

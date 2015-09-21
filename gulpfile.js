@@ -44,7 +44,7 @@ function compileJS() {
   return b.bundle()
     // log errors if they happen
     .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('bundle.js'))
+    .pipe(source('app.js'))
     // optional, remove if you don't need to buffer file contents
     .pipe(buffer())
     // optional, remove if you dont want sourcemaps

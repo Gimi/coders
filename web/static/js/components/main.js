@@ -22,12 +22,14 @@ const Main = React.createClass({
   },
 
   childContextTypes: {
-    muiTheme: React.PropTypes.object
+    muiTheme: React.PropTypes.object,
+    users: React.PropTypes.object
   },
 
   getChildContext() {
     return {
-      muiTheme: ThemeManager.getCurrentTheme()
+      muiTheme: ThemeManager.getCurrentTheme(),
+      users: this.props.users
     };
   },
 

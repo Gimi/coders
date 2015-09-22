@@ -10,11 +10,15 @@ const GithubUsers = require('../datastore/github_users');
 const http = require('../http');
 
 const AddUserDialog = React.createClass({
+  mixins: [React.addons.PureRenderMixin],
+
   getInitialState() {
     return {processing: false};
   },
 
-  mixins: [React.addons.PureRenderMixin],
+  contextTypes: {
+    users: React.PropTypes.object
+  },
 
   render() {
     let actions = [
@@ -58,7 +62,7 @@ const AddUserDialog = React.createClass({
             if(r_i > 0) { msg = msg.slice(0, r_i - 1) }
             nextState["error"] = msg;
           } else {
-            if(resp.body.data) { GithubUsers.push(resp.body.data) }
+            if(resp.body.data) { this.context.users.push(resp.body.data) }
             this.refs.dialog.dismiss();
           }
           this.setState(nextState);

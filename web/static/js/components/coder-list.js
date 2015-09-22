@@ -1,37 +1,27 @@
 'use strict';
 
-const React = require('react');
+const React = require('react/addons');
 const CoderCard = require('./coder-card');
 const Cortex = require('cortexjs');
-// const im     = require('immutable');
+
 const CoderList = React.createClass({
 
-  shouldComponentUpdate(nextProps, _) {
-    return nextProps.users !== this.props.users;
-  },
+  mixins: [React.addons.PureRenderMixin],
 
-  /*
   propTypes: {
     users: React.PropTypes.object
   },
-  */
 
   getDefaultProps() {
-    return {"users": []};
-  },
-
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
+    return {"users": new Cortex([])};
   },
 
   render() {
-    let cards = this.props.users.map((user) => {
-      return <CoderCard user={user} />
-    });
-
     return (
       <div>
-        {cards}
+      {this.props.users.map((user) => {
+        return <CoderCard key={user.val().login} user={user} />
+      })}
       </div>
     );
   }

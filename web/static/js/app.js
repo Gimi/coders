@@ -11,12 +11,16 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 // import socket from "./socket"
 
 // ------------------- My App -----------------------
-//
+
+// Needed for onTouchTap
+// Can go away when react 1.0 release
+require("react-tap-event-plugin")();
+
 // get constant references to React and Material-UI
 // components, as we will not be modifying these
-
 const React = require('react');
 const Main  = require('./components/main');
+
 let GithubUsers = require('./datastore/github_users');
 
 let main = React.render(<Main users={GithubUsers} />, document.getElementById('app-dom'));

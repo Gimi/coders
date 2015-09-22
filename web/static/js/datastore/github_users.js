@@ -1,15 +1,13 @@
 'use strict';
 
-const Cortex  = require('cortexjs');
-const request = require('superagent');
-// const im      = require('immutable');
+const Cortex = require('cortexjs');
+const http   = require('../http');
 
 let GithubUsers = new Cortex([]);
 
 GithubUsers.GET = function() {
-  request
+  http
     .get("/api/github_users")
-    .set("Accept", "application/json")
     .end((err, resp) => {
       if(resp.ok) {
         this.set(resp.body.data);

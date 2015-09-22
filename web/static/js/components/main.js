@@ -2,24 +2,23 @@
 
 const React = require('react');
 
-const AppBar = require('material-ui/lib/app-bar');
-const FloatingActionButton = require('material-ui/lib/floating-action-button');
+const AppBar       = require('material-ui/lib/app-bar');
 const ThemeManager = require('material-ui/lib/styles/theme-manager')();
 
-const CoderList = require('./coder-list');
-//const im     = require('immutable');
+const AddUserButton = require('./add-user-button');
+const CoderList     = require('./coder-list');
+const AddUserDialog = require('./add-user-dialog');
+
 const Cortex = require('cortexjs');
 
 const Main = React.createClass({
 
-  /*
   propTypes: {
-    users: React.PropTypes.array
+    users: React.PropTypes.object,
   },
-  */
 
   getDefaultProps() {
-    return {"users": []};
+    return {users: new Cortex([])};
   },
 
   childContextTypes: {
@@ -35,10 +34,16 @@ const Main = React.createClass({
   render() {
     return (
       <div>
-        <AppBar title="Coder Fun Facts!" iconElementRight={<FloatingActionButton iconClassName="muidocs-icon-content-add" mini={true} />} />
+        <AppBar title="Coder Fun Facts!"  />
+        <AddUserButton onClick={this.handleAddUser} />
         <CoderList users={this.props.users} />
+        <AddUserDialog ref="add_user_dialog" />
       </div>
     );
+  },
+
+  handleAddUser() {
+    this.refs.add_user_dialog.show();
   }
 
 });

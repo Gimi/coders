@@ -11,8 +11,8 @@ const FlatButton = require('material-ui/lib/flat-button');
 const Avatar = require('material-ui/lib/avatar');
 
 const CoderCard = React.createClass({
-  childContextTypes: {
-    muiTheme: React.PropTypes.object
+  propTypes: {
+    user: React.PropTypes.object
   },
 
   getDefaultProps() {

@@ -2,13 +2,19 @@
 
 const React = require('react/addons');
 
-const muiCard = require('material-ui/lib/card/index');
-const Card = muiCard.Card;
-const CardHeader = muiCard.CardHeader;
-const CardText = muiCard.CardText;
-const CardActions = muiCard.CardActions;
-const FlatButton = require('material-ui/lib/flat-button');
-const Avatar = require('material-ui/lib/avatar');
+const Avatar      = require('material-ui/lib/avatar');
+const CardAll     = require('material-ui/lib/card/index');
+const Card        = CardAll.Card;
+const CardHeader  = CardAll.CardHeader;
+const CardText    = CardAll.CardText;
+const CardActions = CardAll.CardActions;
+const FlatButton  = require('material-ui/lib/flat-button');
+const FontIcon    = require('material-ui/lib/font-icon');
+const HomeIcon    = require('material-ui/lib/svg-icons/action/home');
+const List        = require('material-ui/lib/lists/list');
+const ListDivider = require('material-ui/lib/lists/list-divider');
+const ListItem    = require('material-ui/lib/lists/list-item');
+const Paper       = require('material-ui/lib/paper');
 
 const CoderCard = React.createClass({
   propTypes: {
@@ -16,31 +22,47 @@ const CoderCard = React.createClass({
   },
 
   getDefaultProps() {
-    return {user: null};
+    return {user: {}};
+  },
+
+  create_repo_listitem(repo, count_field, text) {
+    if(!repo) return;
+    // let link = <a href={repo.html_url}>{repo.name}</a>; 
+    let link = repo.name;
+    return(
+      <ListItem primaryText={link} secondaryText={text + repo[count_field]} leftIcon={<HomeIcon />} />
+    );
   },
 
   render() {
-    if(this.props.user == null) return;
-    let user = this.props.user.val();
+    let user = this.props.user;
+    if(user.getValue) user = user.getValue();
+
+    let repos = user.repos || {favorite_language: "Unknow"};
+
     return (
-      <Card initiallyExpanded={true}>
+      <Card initiallyExpanded={false}>
         <CardHeader title={user.login} subtitle={user.name} avatar={<Avatar style={{color:'red'}} src={user.avatar_url} />} showExpandableButton={true} />
         <CardText expandable={true}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+          <Paper>
+            <List subheader="Basic Info">
+              <ListItem primaryText="Favorite Language" secondaryText={repos.favorite_language} leftIcon={<HomeIcon />} />
+              <ListItem primaryText="Joined Github" secondaryText={user.created_at} leftIcon={<HomeIcon />} />
+              <ListItem primaryText="Added To Watch" secondaryText={user.watched_at} leftIcon={<HomeIcon />} />
+            </List>
+          </Paper>
+          <Paper>
+            <List subheader="Repositories">
+              { this.create_repo_listitem(repos.most_wanted, "watchers_count", "Most Watched by ") }
+              { this.create_repo_listitem(repos.most_starred, "stargazers_count", "Most Starred by ") }
+              { this.create_repo_listitem(repos.most_forked, "forks_count", "Most Forked by ") }
+            </List>
+          </Paper>
         </CardText>
         <CardActions expandable={true}>
-          <FlatButton label="Action1"/>
-          <FlatButton label="Action2"/>
+          <FlatButton label="Refresh"/>
+          <FlatButton label="Delete"/>
         </CardActions>
-        <CardText expandable={true}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-          Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-          Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-        </CardText>
       </Card>
     );
   }

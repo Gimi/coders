@@ -14,7 +14,7 @@ defmodule Coders do
       # Start the application event dispatcher
       supervisor(Coders.EventDispatcher, []),
       # Start the task server
-      supervisor(Task.Supervisor, [[name: Coders.TaskServer]])
+      supervisor(Task.Supervisor, [[name: Coders.TaskServer, strategy: :simple_one_for_one]])
       # Here you could define other workers and supervisors as children
       # worker(Coders.Worker, [arg1, arg2, arg3]),
     ]

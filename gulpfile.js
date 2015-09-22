@@ -20,6 +20,7 @@ var minifyCss = require('gulp-minify-css');
 var paths = {
   'js':     ['./web/static/js/app.js'],
   'css':    [
+    './node_modules/flexboxgrid/dist/flexboxgrid.css',
     './web/static/vendor/**/*.css', './deps/**/*.css', './web/static/css/**/*.css'
   ],
   'assets': ['./web/static/assets/**/*'],

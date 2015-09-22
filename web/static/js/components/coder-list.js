@@ -1,6 +1,6 @@
 'use strict';
 
-const React = require('react/addons');
+const React = require('react');
 const CoderCard = require('./coder-card');
 const Cortex = require('cortexjs');
 

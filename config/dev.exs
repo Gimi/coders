@@ -35,7 +35,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :coders, Coders.Repo,
   database: "coders",
-  #host: System.get_env("RETHINKDB_PORT_32768_TCP_ADDR"),
-  #port: System.get_env("RETHINKDB_PORT_32768_TCP_PORT"),
-  host: "localhost",
-  port: 32769
+  host: System.get_env("RETHINKDB_PORT_28015_TCP_ADDR"),
+  port: elem(Integer.parse(System.get_env("RETHINKDB_PORT_28015_TCP_PORT")), 0) # port can only be integer
+  #host: "localhost",
+  #port: 32769

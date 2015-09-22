@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# I assume you
+# 1. following the README file
+# 2. build phoenix image yourself and tag it gimi/phoenix:1.0.2
+
+# for the first time:
+sudo docker run -d --name rethinkdb211 -v "${PWD}/database:/data" -p "8080:8080" -p "28015:28015" rethinkdb:2.1.1 \
+  || \
+sudo docker start rethinkdb211
+
+# otherwise:
+# 

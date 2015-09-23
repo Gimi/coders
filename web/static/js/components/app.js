@@ -3,22 +3,19 @@
 const React = require('react');
 
 const AppBar       = require('material-ui/lib/app-bar');
+const Paper        = require('material-ui/lib/paper');
 const ThemeManager = require('material-ui/lib/styles/theme-manager')();
 
 const AddUserButton = require('./add-user-button');
 const CoderList     = require('./coder-list');
 const AddUserDialog = require('./add-user-dialog');
 
-const Cortex = require('cortexjs');
+let AppStore = require('../datastore/app_store');
 
-const Main = React.createClass({
+const App = React.createClass({
 
-  propTypes: {
-    users: React.PropTypes.object,
-  },
-
-  getDefaultProps() {
-    return {users: new Cortex([])};
+  getInitialState() {
+    return AppStore.getState();
   },
 
   childContextTypes: {
@@ -29,19 +26,27 @@ const Main = React.createClass({
   getChildContext() {
     return {
       muiTheme: ThemeManager.getCurrentTheme(),
-      users: this.props.users
+      users: this.state.users
     };
   },
 
   render() {
     return (
-      <div>
+      <Paper>
         <AppBar title="Coder Fun Facts!"  />
         <AddUserButton onClick={this.handleAddUser} />
-        <CoderList users={this.props.users} />
+        <CoderList users={this.state.users} />
         <AddUserDialog ref="add_user_dialog" />
-      </div>
+      </Paper>
     );
+  },
+
+  componentWillMount() {
+    this.state.onUpdate((updates) => {
+      this.setState(updates);
+    });
+
+    AppStore.getUsers();
   },
 
   handleAddUser() {
@@ -50,4 +55,4 @@ const Main = React.createClass({
 
 });
 
-module.exports = Main;
+module.exports = App;

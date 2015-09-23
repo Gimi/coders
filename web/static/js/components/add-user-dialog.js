@@ -6,7 +6,6 @@ const Dialog = require('material-ui/lib/dialog');
 const TextField = require('material-ui/lib/text-field');
 const Loader    = require('halogen/RingLoader');
 
-const GithubUsers = require('../datastore/github_users');
 const http = require('../http');
 
 const AddUserDialog = React.createClass({

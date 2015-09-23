@@ -19,14 +19,6 @@ require("react-tap-event-plugin")();
 // get constant references to React and Material-UI
 // components, as we will not be modifying these
 const React = require('react');
-const Main  = require('./components/main');
+const App   = require('./components/app');
 
-let GithubUsers = require('./datastore/github_users');
-
-let main = React.render(<Main users={GithubUsers} />, document.getElementById('app-dom'));
-
-GithubUsers.onUpdate((updatedUsers) => {
-  main.setProps({"users": updatedUsers});
-});
-
-GithubUsers.GET()
+React.render(<App />, document.getElementById("app-dom"));

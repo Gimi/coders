@@ -12,13 +12,13 @@ var watchify   = require('watchify');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
 
-var assign = require('lodash.assign');
+var assign = require('object-assign');
 var del    = require('del');
 var minifyCss = require('gulp-minify-css');
 
 // PATH information
 var paths = {
-  'js':     ['./web/static/js/app.js'],
+  'js':     ['./web/static/js/index.js'],
   'css':    [
     './node_modules/flexboxgrid/dist/flexboxgrid.css',
     './web/static/vendor/**/*.css', './deps/**/*.css', './web/static/css/**/*.css'

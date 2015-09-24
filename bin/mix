@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# 1. need to run rethinkdb docker first
+# 2. build phoenix image yourself and tag it gimi/phoenix:1.0.2
+
+ROOTDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )/.." && pwd )
+sudo docker run -it --rm --name phoenix -v "${ROOTDIR}:/code" --link rethinkdb211:rethinkdb --expose 4000 -p "4000:4000" gimi/phoenix:1.0.2 mix $*
